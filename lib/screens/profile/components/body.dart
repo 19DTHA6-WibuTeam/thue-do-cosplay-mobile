@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/api/logout.dart';
+import 'package:shop_app/screens/profile/components/about.dart';
+import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -13,29 +16,62 @@ class Body extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "My Account",
+            text: "Thông tin tài khoản",
             icon: "assets/icons/User Icon.svg",
             press: () => {},
           ),
           ProfileMenu(
-            text: "Notifications",
+            text: "Đơn hàng",
             icon: "assets/icons/Bell.svg",
             press: () {},
           ),
+          // ProfileMenu(
+          //   text: "Settings",
+          //   icon: "assets/icons/Settings.svg",
+          //   press: () {},
+          // ),
           ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Help Center",
+            text: "Giới thiệu",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, AboutScreen.routeName);
+            },
           ),
           ProfileMenu(
-            text: "Log Out",
+            text: "Đăng xuất",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              print('Đăng xuất!!!');
+
+              _dismissDialog() {
+                Navigator.pop(context);
+              }
+
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Thông báo'),
+                      content: Text('Bạn có muốn đăng xuất không?'),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              _dismissDialog();
+                            },
+                            child: Text('Đóng')),
+                        TextButton(
+                          onPressed: () async {
+                            _dismissDialog();
+                            await logout();
+                            Navigator.pushNamed(
+                                context, SignInScreen.routeName);
+                          },
+                          child: Text('Kó'),
+                        )
+                      ],
+                    );
+                  });
+            },
           ),
         ],
       ),

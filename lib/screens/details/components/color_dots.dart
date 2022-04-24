@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/rounded_icon_btn.dart';
-import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/models/All.dart';
+// import 'package:shop_app/models/Product.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class ColorDots extends StatelessWidget {
-  const ColorDots({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
+class ColorDots extends StatefulWidget {
+  ColorDots({Key? key, required this.product}) : super(key: key);
 
   final Product product;
+  int quantity = 0;
+  @override
+  State<ColorDots> createState() => _ColorDotsState();
+}
+
+class _ColorDotsState extends State<ColorDots> {
+  int minValue = 0;
+  int maxValue = 0;
+  int? _maxValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _maxValue = widget.product.product_quantity;
+    if (_maxValue == null)
+      maxValue = 0;
+    else
+      maxValue = _maxValue!;
+    if (maxValue > 0) {
+      minValue = 1;
+      widget.quantity = 1;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +43,43 @@ class ColorDots extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         children: [
-          ...List.generate(
-            product.colors.length,
-            (index) => ColorDot(
-              color: product.colors[index],
-              isSelected: index == selectedColor,
-            ),
-          ),
+          // Chọn màu sản phẩm
+          // ...List.generate(
+          //   product.colors.length,
+          //   (index) => ColorDot(
+          //     color: product.colors[index],
+          //     isSelected: index == selectedColor,
+          //   ),
+          // ),
           Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
-            press: () {},
+            press: () {
+              setState(() {
+                if (widget.quantity > minValue) widget.quantity--;
+              });
+            },
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
+          SizedBox(width: getProportionateScreenWidth(15)),
+          Text(
+            '${widget.quantity}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              // color: Colors.black87,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(width: getProportionateScreenWidth(15)),
           RoundedIconBtn(
             icon: Icons.add,
             showShadow: true,
-            press: () {},
+            press: () {
+              setState(() {
+                if (widget.quantity < maxValue) widget.quantity++;
+                // print(widget.quantity);
+              });
+            },
           ),
         ],
       ),

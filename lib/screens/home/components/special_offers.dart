@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/api/product_type.dart';
+import 'package:shop_app/models/All.dart';
+import 'package:shop_app/screens/category/category_screen.dart';
 
 import '../../../size_config.dart';
 import 'section_title.dart';
@@ -16,29 +19,67 @@ class SpecialOffers extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
-            title: "Special for you",
-            press: () {},
+            title: "Danh mục",
+            press: () {
+              Navigator.pushNamed(context, CategoryScreen.routeName);
+            },
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
-                numOfBrands: 24,
-                press: () {},
-              ),
-              SizedBox(width: getProportionateScreenWidth(20)),
-            ],
+          // child: Row(
+          //   children: [
+          //     SpecialOfferCard(
+          //       image: "assets/images/Image Banner 2.png",
+          //       category: "Smartphone",
+          //       numOfBrands: 18,
+          //       press: () {},
+          //     ),
+          //     SpecialOfferCard(
+          //       image: "assets/images/Image Banner 3.png",
+          //       category: "Fashion",
+          //       numOfBrands: 24,
+          //       press: () {},
+          //     ),
+          //     SizedBox(width: getProportionateScreenWidth(20)),
+          //   ],
+          // ),
+          child: FutureBuilder<List<ProductType>?>(
+            future: getProductTypes(), // async work
+            builder: (BuildContext context,
+                AsyncSnapshot<List<ProductType>?> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Text('Loading...');
+                default:
+                  if (snapshot.hasError) {
+                    print('Error: ${snapshot.error}');
+                    return Text('Wut.');
+                  } else {
+                    List<ProductType>? productTypes = snapshot.data;
+                    // return Text('Result: ${snapshot.data}');
+                    return Row(
+                      children: [
+                        ...List.generate(
+                          productTypes!.length,
+                          (index) {
+                            // print(productTypes[index].product_type_id.runtimeType);
+                            return SpecialOfferCard(
+                              image:
+                                  "assets/images/product_types/${index + 1}.jpg",
+                              category: productTypes[index].product_type_name,
+                              numOfBrands: 123,
+                              press: () {},
+                            );
+                          },
+                        ),
+                        SizedBox(width: getProportionateScreenWidth(20)),
+                      ],
+                    );
+                  }
+              }
+            },
           ),
         ),
       ],
@@ -82,8 +123,8 @@ class SpecialOfferCard extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15),
+                        Color(0xFF343434).withOpacity(0.5),
+                        Color(0xFF343434).withOpacity(0.5),
                       ],
                     ),
                   ),

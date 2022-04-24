@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/screens/category/category_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/product/product_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
 
 import '../constants.dart';
@@ -39,8 +41,14 @@ class CustomBottomNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/Shop Icon.svg",
+                // icon: SvgPicture.asset(
+                //   "assets/icons/Shop Icon.svg",
+                //   color: MenuState.home == selectedMenu
+                //       ? kPrimaryColor
+                //       : inActiveIconColor,
+                // ),
+                icon: Icon(
+                  Icons.home_outlined,
                   color: MenuState.home == selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,
@@ -49,16 +57,36 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                // icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
+                icon: Icon(
+                  Icons.category_outlined,
+                  color: MenuState.category == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, CategoryScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
+                // icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
+                icon: Icon(
+                  Icons.shopping_bag_outlined,
+                  color: MenuState.product == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, ProductScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/User Icon.svg",
+                // icon: SvgPicture.asset(
+                //   "assets/icons/User Icon.svg",
+                //   color: MenuState.profile == selectedMenu
+                //       ? kPrimaryColor
+                //       : inActiveIconColor,
+                // ),
+                icon: Icon(
+                  Icons.perm_identity,
                   color: MenuState.profile == selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,

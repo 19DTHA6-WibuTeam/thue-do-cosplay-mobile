@@ -1,5 +1,5 @@
 name: shop_app
-description: A new Flutter project.
+description: Cửa hàng cho thuê đồ cosplay
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -29,7 +29,10 @@ dependencies:
   cupertino_icons: ^1.0.3
   # if you are using latest flutter please update your flutter_svg package to ^0.18.*
   flutter_svg: ^0.22.0 # help us to use SVG in our app
-  provider: ^6.0.0 # for State management
+  provider: ^6.0.2 # for State management
+  http: ^0.13.4
+  shared_preferences: ^2.0.13
+  loadmore: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -46,8 +49,9 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
     - assets/icons/
+    - assets/images/
+    - assets/images/product_types/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -59,12 +63,19 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Muli
+    # - family: Muli
+    #   fonts:
+    #     - asset: assets/fonts/muli/Muli.ttf
+    #     - asset: assets/fonts/muli/Muli-Bold.ttf
+    #       weight: 700
+    #     - asset: assets/fonts/muli/Muli-Light.ttf
+    #       weight: 300
+    - family: Nunito
       fonts:
-        - asset: assets/fonts/muli/Muli.ttf
-        - asset: assets/fonts/muli/Muli-Bold.ttf
+        - asset: assets/fonts/nunito/Nunito.ttf
+        - asset: assets/fonts/nunito/Nunito-Bold.ttf
           weight: 700
-        - asset: assets/fonts/muli/Muli-Light.ttf
+        - asset: assets/fonts/nunito/Nunito-Light.ttf
           weight: 300
   #   - family: Trajan Pro
   #     fonts:

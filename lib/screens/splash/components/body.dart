@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/size_config.dart';
+import 'package:shop_app/shared_preferences.dart';
 
 // This is the best practice
 import '../components/splash_content.dart';
@@ -68,9 +70,16 @@ class _BodyState extends State<Body> {
                     ),
                     Spacer(flex: 3),
                     DefaultButton(
-                      text: "Continue",
-                      press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      text: "Tiếp tục",
+                      press: () async {
+                        await BaseSharedPreferences.setString(
+                            'skip_splash', 'true');
+                        final userToken =
+                            await BaseSharedPreferences.getString('user_token');
+                        if (userToken.length > 0)
+                          Navigator.pushNamed(context, HomeScreen.routeName);
+                        else
+                          Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
                     Spacer(),
