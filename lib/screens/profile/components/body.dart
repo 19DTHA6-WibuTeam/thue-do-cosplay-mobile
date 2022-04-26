@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/api/logout.dart';
+import 'package:shop_app/screens/invoice/invoice_screen.dart';
 import 'package:shop_app/screens/profile/components/about.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
@@ -23,7 +24,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Đơn hàng",
             icon: "assets/icons/Bell.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, InvoiceScreen.routeName);
+            },
           ),
           // ProfileMenu(
           //   text: "Settings",

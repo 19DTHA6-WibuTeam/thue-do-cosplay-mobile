@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/api/cart.dart';
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
 import 'package:shop_app/shared_preferences.dart';
 
 import '../../../size_config.dart';
-import '../cart_screen.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {

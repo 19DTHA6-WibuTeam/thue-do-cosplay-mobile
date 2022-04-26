@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/All.dart';
 import 'package:shop_app/size_config.dart';
+import 'package:intl/intl.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
@@ -49,6 +51,8 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
+const String API_URL = 'https://wibuteam.phatdev.xyz/api/';
+
 class Fee {
   // Phí vận chuyển
   static int transport(int weight) {
@@ -76,4 +80,46 @@ class Fee {
 
 String numberWithDot(String x) {
   return x.toString().replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), '.');
+}
+
+String unixToDate(int unix) {
+  var dt = DateTime.fromMillisecondsSinceEpoch(unix);
+  var d24 = DateFormat('dd/MM/yyyy, HH:mm').format(dt); // 31/12/2000, 22:00
+  return d24;
+}
+
+class Calculate with ChangeNotifier {
+  Calculate({required this.carts});
+
+  List<Cart> carts;
+  int _sum = 0;
+  int _num = 0;
+  int _weight = 0;
+
+  int get sum => _sum;
+  int get num => _num;
+  int get weight => _weight;
+
+  void update() async {
+    _sum = 0;
+    _num = carts.length;
+    for (var cart in carts) {
+      _sum += cart.cart_product_quantity * cart.product_rental_price;
+      _weight += cart.cart_product_quantity * cart.product_weight;
+    }
+    notifyListeners();
+  }
+}
+
+String orderStatus(int s) {
+  switch (s) {
+    case 0:
+      return 'Đã huỷ';
+    case 1:
+      return 'Đang chờ thanh toán';
+    case 2:
+      return 'Đã thanh toán';
+    default:
+      return '';
+  }
 }

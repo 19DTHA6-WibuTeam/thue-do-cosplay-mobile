@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
 // import 'package:shop_app/shared_preferences.dart';
 
 Future<List<Product>?> getProducts(int page, int limit) async {
-  final response = await http.get(Uri.parse(
-      'https://wibuteam.phatdev.xyz/api/?action=get_products&page=$page&limit=$limit'));
+  final response = await http
+      .get(Uri.parse(API_URL + '?action=get_products&page=$page&limit=$limit'));
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);

@@ -53,14 +53,18 @@ class User {
 class ProductType {
   final String product_type_id;
   final String product_type_name;
+  final int product_type_quantity;
 
-  ProductType(this.product_type_id, this.product_type_name);
+  ProductType(
+      this.product_type_id, this.product_type_name, this.product_type_quantity);
   ProductType.fromJson(Map<String, dynamic> json)
       : product_type_id = json['product_type_id'],
-        product_type_name = json['product_type_name'];
+        product_type_name = json['product_type_name'],
+        product_type_quantity = int.parse(json['product_type_quantity']);
   Map<String, dynamic> toJson() => {
         'product_type_id': product_type_id,
         'product_type_name': product_type_name,
+        'product_type_quantity': product_type_quantity,
       };
 }
 
@@ -152,4 +156,67 @@ class Cart {
       };
 }
 
-class Invoice {}
+class Invoice {
+  final String invoice_id;
+  final String invoice_user_fullname;
+  final String invoice_user_phone_number;
+  final String invoice_user_email;
+  final int invoice_subtotal;
+  final int invoice_fee_transport;
+  final int invoice_fee_bond;
+  final int invoice_status;
+  final String invoice_created_at;
+  Invoice(
+      this.invoice_id,
+      this.invoice_user_fullname,
+      this.invoice_user_phone_number,
+      this.invoice_user_email,
+      this.invoice_subtotal,
+      this.invoice_fee_transport,
+      this.invoice_fee_bond,
+      this.invoice_status,
+      this.invoice_created_at);
+  Invoice.fromJson(Map<String, dynamic> json)
+      : invoice_id = json['invoice_id'],
+        invoice_user_fullname = json['invoice_user_fullname'],
+        invoice_user_phone_number = json['invoice_user_phone_number'],
+        invoice_user_email = json['invoice_user_email'],
+        invoice_subtotal = int.parse(json['invoice_subtotal']),
+        invoice_fee_transport = int.parse(json['invoice_fee_transport']),
+        invoice_fee_bond = int.parse(json['invoice_fee_bond']),
+        invoice_status = int.parse(json['invoice_status']),
+        invoice_created_at = json['invoice_created_at'];
+  Map<String, dynamic> toJson() => {
+        'invoice_id': invoice_id,
+        'invoice_user_fullname': invoice_user_fullname,
+        'invoice_user_phone_number': invoice_user_phone_number,
+        'invoice_user_email': invoice_user_email,
+        'invoice_subtotal': invoice_subtotal,
+        'invoice_fee_transport': invoice_fee_transport,
+        'invoice_fee_bond': invoice_fee_bond,
+        'invoice_status': invoice_status,
+        'invoice_created_at': invoice_created_at,
+      };
+}
+
+class InvoiceDetails {
+  final String product_id;
+  final String product_name;
+  final String product_img;
+  final int invd_product_quantity;
+  final int invd_product_rental_price;
+  InvoiceDetails.fromJson(Map<String, dynamic> json)
+      : product_id = json['product_id'],
+        product_name = json['product_name'],
+        product_img = json['product_img'],
+        invd_product_quantity = int.parse(json['invd_product_quantity']),
+        invd_product_rental_price =
+            int.parse(json['invd_product_rental_price']);
+  Map<String, dynamic> toJson() => {
+        'product_id': product_id,
+        'product_name': product_name,
+        'product_img': product_img,
+        'invd_product_quantity': invd_product_quantity,
+        'invd_product_rental_price': invd_product_rental_price,
+      };
+}

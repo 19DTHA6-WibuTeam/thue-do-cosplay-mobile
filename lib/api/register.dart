@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shop_app/constants.dart';
 
 Future<bool?> fetchRegister(
     String fullname, String email, String password) async {
@@ -9,7 +10,7 @@ Future<bool?> fetchRegister(
   map['email'] = email;
   map['password'] = password;
   final response = await http.post(
-    Uri.parse('https://wibuteam.phatdev.xyz/api/?action=register'),
+    Uri.parse(API_URL + '?action=register'),
     headers: <String, String>{
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },

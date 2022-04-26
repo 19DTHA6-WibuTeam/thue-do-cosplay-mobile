@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
 // import 'package:shop_app/shared_preferences.dart';
 
@@ -26,8 +27,8 @@ Future<List<Cart>?> getCarts(Future<String> _userId) async {
 Future<bool> postCart(
     Future<String> _userId, String productId, int cartProductQuantity) async {
   String userId = await _userId;
-  final response = await http.get(Uri.parse(
-      'https://wibuteam.phatdev.xyz/api/?action=post_cart&user_id=$userId&product_id=$productId&cart_product_quantity=$cartProductQuantity'));
+  final response = await http.get(Uri.parse(API_URL +
+      '?action=post_cart&user_id=$userId&product_id=$productId&cart_product_quantity=$cartProductQuantity'));
 
   if (response.statusCode == 200)
     return jsonDecode(response.body)['success'];
@@ -38,7 +39,7 @@ Future<bool> postCart(
 Future<bool> deleteCart(Future<String> _userId, String productId) async {
   String userId = await _userId;
   final response = await http.get(Uri.parse(
-      'https://wibuteam.phatdev.xyz/api/?action=delete_cart&user_id=$userId&product_id=$productId'));
+      API_URL + '?action=delete_cart&user_id=$userId&product_id=$productId'));
 
   if (response.statusCode == 200)
     return jsonDecode(response.body)['success'];

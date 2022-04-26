@@ -53,7 +53,8 @@ class SpecialOffers extends StatelessWidget {
                                       "assets/images/product_types/${index + 1}.jpg",
                                   category:
                                       productTypes[index].product_type_name,
-                                  numOfBrands: 123,
+                                  numOfBrands:
+                                      productTypes[index].product_type_quantity,
                                   press: () {},
                                 ),
                                 SizedBox(
@@ -133,7 +134,7 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
+                        TextSpan(text: "$numOfBrands sản phẩm")
                       ],
                     ),
                   ),

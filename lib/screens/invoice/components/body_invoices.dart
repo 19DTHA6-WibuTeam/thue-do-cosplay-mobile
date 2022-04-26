@@ -1,48 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/api/product.dart';
-import 'package:shop_app/components/product_card.dart';
+import 'package:shop_app/api/invoice.dart';
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
+import 'package:shop_app/screens/invoice/invoice_details.dart';
+import 'package:shop_app/screens/product/components/section_title.dart';
+import 'package:shop_app/shared_preferences.dart';
+import 'package:shop_app/size_config.dart';
 
-import '../../../size_config.dart';
-import 'home_header.dart';
-import 'section_title.dart';
-// import 'popular_product.dart';
-
-class Body extends StatefulWidget {
+class BodyInvoices extends StatefulWidget {
   @override
-  State<Body> createState() => _BodyState();
+  State<BodyInvoices> createState() => _BodyInvoicesState();
 }
 
-class _BodyState extends State<Body> {
-  // We will fetch data from this Rest api
-  // final _baseUrl = 'https://wibuteam.phatdev.xyz/api/?action=get_products';
-  // At the beginning, we fetch the first 20 posts
+class _BodyInvoicesState extends State<BodyInvoices> {
   int _page = 1;
-  int _limit = 20;
-  // There is next page or not
+  int _limit = 10;
   bool _hasNextPage = true;
-  // Used to display loading indicators when _firstLoad function is running
   bool _isFirstLoadRunning = false;
-  // Used to display loading indicators when _loadMore function is running
   bool _isLoadMoreRunning = false;
-  // This holds the posts fetched from the server
-  // List _posts = [];
-  List<Product> _products = [];
-  // This function will be called when the app launches (see the initState function)
+  List<Invoice> _invoices = [];
+
   void _firstLoad() async {
     setState(() {
       _isFirstLoadRunning = true;
     });
     try {
-      // final res =
-      //     await http.get(Uri.parse("$_baseUrl?page=$_page&limit=$_limit"));
-      final res = await getProducts(_page, _limit);
+      final res = await getInvoices(
+          BaseSharedPreferences.getString('user_id'), _page, _limit);
       setState(() {
-        // _posts = json.decode(res.body);
-        _products = res!;
+        _invoices = res!;
       });
     } catch (err) {
-      print('Something went wrong');
+      print('Something went wrongg');
     }
 
     setState(() {
@@ -51,7 +40,6 @@ class _BodyState extends State<Body> {
   }
 
   // This function will be triggered whenver the user scroll
-  // to near the bottom of the list view
   void _loadMore() async {
     if (_hasNextPage == true &&
         _isFirstLoadRunning == false &&
@@ -62,15 +50,13 @@ class _BodyState extends State<Body> {
       });
       _page += 1; // Increase _page by 1
       try {
-        // final res =
-        //     await http.get(Uri.parse("$_baseUrl?page=$_page&limit=$_limit"));
-        final res = await getProducts(_page, _limit);
+        final res = await getInvoices(
+            BaseSharedPreferences.getString('user_id'), _page, _limit);
 
-        // final List fetchedPosts = json.decode(res.body);
-        final List<Product> fetchedProducts = res!;
-        if (fetchedProducts.length > 0) {
+        final List<Invoice> fetchedInvoices = res!;
+        if (fetchedInvoices.length > 0) {
           setState(() {
-            _products.addAll(fetchedProducts);
+            _invoices.addAll(fetchedInvoices);
           });
         } else {
           // This means there is no more data
@@ -111,20 +97,7 @@ class _BodyState extends State<Body> {
       // child: SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: getProportionateScreenHeight(20)),
-          HomeHeader(),
           SizedBox(height: getProportionateScreenWidth(10)),
-          // PopularProducts(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: SectionTitle(
-              title: "Sản phẩm mới",
-              press: () {},
-              seeMore: false,
-            ),
-          ),
-          SizedBox(height: getProportionateScreenWidth(20)),
           _isFirstLoadRunning
               ? Center(
                   child: CircularProgressIndicator(),
@@ -133,21 +106,30 @@ class _BodyState extends State<Body> {
                   child: GridView.count(
                     // shrinkWrap: true,
                     padding: EdgeInsets.all(18.0),
-                    childAspectRatio: 1 / 1.5,
-                    crossAxisCount: 2,
+                    childAspectRatio: 6,
+                    crossAxisCount: 1,
                     children: [
                       ...List.generate(
-                        _products.length,
+                        _invoices.length,
                         (index) {
-                          return ProductCard(product: _products[index]);
+                          // return ProductCard(product: _invoices[index]);
+                          return GestureDetector(
+                              onTap: () {
+                                // InvoiceDetailsScreen(
+                                //     invoiceId: _invoices[index].invoice_id);
+                                Navigator.pushNamed(
+                                    context, InvoiceDetailsScreen.routeName,
+                                    arguments: InvoiceDetailsArguments(
+                                        invoice: _invoices[index]));
+                              },
+                              child: Text(
+                                  'Ngày ${unixToDate(int.parse(_invoices[index].invoice_created_at) * 1000)}: mã đơn hàng #INV${_invoices[index].invoice_id}'));
                         },
                       ),
-                      SizedBox(width: getProportionateScreenWidth(20)),
+                      // SizedBox(width: getProportionateScreenWidth(20)),
                     ],
                   ),
                 ),
-          // SizedBox(width: getProportionateScreenWidth(20)),
-          // when the _loadMore function is running
           if (_isLoadMoreRunning == true)
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 40),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
 import 'package:shop_app/shared_preferences.dart';
 
@@ -9,7 +10,7 @@ Future<User?> fetchLogin(String email, String password) async {
   map['email'] = email;
   map['password'] = password;
   final response = await http.post(
-    Uri.parse('https://wibuteam.phatdev.xyz/api/?action=login'),
+    Uri.parse(API_URL + '?action=login'),
     headers: <String, String>{
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
