@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/api/product.dart';
 import 'package:shop_app/components/product_card.dart';
 import 'package:shop_app/models/All.dart';
+import 'package:shop_app/screens/home/components/home_header.dart';
+import 'package:shop_app/screens/home/components/section_title.dart';
 
 import '../../../size_config.dart';
-import 'home_header.dart';
-import 'section_title.dart';
 // import 'popular_product.dart';
 
 class Body extends StatefulWidget {
+  Body({required this.keyword});
+  String keyword;
+
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  String title = 'Sản phẩm mới';
+  bool search = false;
   // We will fetch data from this Rest api
   // final _baseUrl = 'https://wibuteam.phatdev.xyz/api/?action=get_products';
   // At the beginning, we fetch the first 20 posts
@@ -33,10 +38,18 @@ class _BodyState extends State<Body> {
     setState(() {
       _isFirstLoadRunning = true;
     });
+    if (widget.keyword.length >= 3) {
+      search = true;
+      title = 'Tìm kiếm';
+    }
     try {
       // final res =
       //     await http.get(Uri.parse("$_baseUrl?page=$_page&limit=$_limit"));
-      final res = await getProducts(_page, _limit);
+      final res;
+      if (search)
+        res = await getProductsBySearch(widget.keyword, _page, _limit);
+      else
+        res = await getProducts(_page, _limit);
       setState(() {
         // _posts = json.decode(res.body);
         _products = res!;
@@ -64,7 +77,11 @@ class _BodyState extends State<Body> {
       try {
         // final res =
         //     await http.get(Uri.parse("$_baseUrl?page=$_page&limit=$_limit"));
-        final res = await getProducts(_page, _limit);
+        var res;
+        if (search)
+          res = await getProductsBySearch(widget.keyword, _page, _limit);
+        else
+          res = await getProducts(_page, _limit);
 
         // final List fetchedPosts = json.decode(res.body);
         final List<Product> fetchedProducts = res!;
@@ -119,7 +136,7 @@ class _BodyState extends State<Body> {
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20)),
             child: SectionTitle(
-              title: "Sản phẩm mới",
+              title: title,
               press: () {},
               seeMore: false,
             ),

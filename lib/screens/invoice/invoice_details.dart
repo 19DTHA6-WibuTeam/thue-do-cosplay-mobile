@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shop_app/api/cart.dart';
 import 'package:shop_app/api/invoice.dart';
-import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
-import 'package:shop_app/shared_preferences.dart';
 
 import 'components/body.dart';
 import 'components/check_out_card.dart';

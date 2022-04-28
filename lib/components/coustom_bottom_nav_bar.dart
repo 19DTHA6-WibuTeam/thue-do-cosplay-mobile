@@ -75,8 +75,9 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, ProductScreen.routeName),
+                onPressed: () => Navigator.pushNamed(
+                    context, ProductScreen.routeName,
+                    arguments: ProductArguments(keyword: '')),
               ),
               IconButton(
                 // icon: SvgPicture.asset(

@@ -1,12 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shop_app/api/product.dart';
-import 'package:shop_app/components/product_card.dart';
-import 'package:shop_app/models/All.dart';
+import 'package:shop_app/screens/home/components/home_header.dart';
 
 import '../../../size_config.dart';
-import 'home_header.dart';
 import 'special_offers.dart';
 // import 'popular_product.dart';
 

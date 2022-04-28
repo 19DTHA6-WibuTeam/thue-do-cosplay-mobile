@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/api/logout.dart';
 import 'package:shop_app/screens/invoice/invoice_screen.dart';
 import 'package:shop_app/screens/profile/components/about.dart';
+import 'package:shop_app/screens/profile_details/profile_details_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
 import 'profile_menu.dart';
@@ -19,7 +20,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Thông tin tài khoản",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () {
+              Navigator.pushNamed(context, ProfileDetailsScreen.routeName);
+            },
           ),
           ProfileMenu(
             text: "Đơn hàng",

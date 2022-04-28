@@ -23,6 +23,7 @@ class SpecialOffers extends StatelessWidget {
             press: () {
               Navigator.pushNamed(context, CategoryScreen.routeName);
             },
+            seeMore: true,
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),

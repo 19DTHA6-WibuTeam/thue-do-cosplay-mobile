@@ -3,7 +3,6 @@ import 'package:shop_app/api/invoice.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/All.dart';
 import 'package:shop_app/screens/invoice/invoice_details.dart';
-import 'package:shop_app/screens/product/components/section_title.dart';
 import 'package:shop_app/shared_preferences.dart';
 import 'package:shop_app/size_config.dart';
 

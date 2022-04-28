@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/api/product_type.dart';
 import 'package:shop_app/models/All.dart';
+import 'package:shop_app/screens/home/components/section_title.dart';
 
 import '../../../size_config.dart';
-import 'section_title.dart';
 
 class SpecialOffers extends StatelessWidget {
   const SpecialOffers({

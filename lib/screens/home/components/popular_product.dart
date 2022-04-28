@@ -24,8 +24,10 @@ class PopularProducts extends StatelessWidget {
           child: SectionTitle(
             title: "Sản phẩm mới",
             press: () {
-              Navigator.pushNamed(context, ProductScreen.routeName);
+              Navigator.pushNamed(context, ProductScreen.routeName,
+                  arguments: ProductArguments(keyword: ''));
             },
+            seeMore: true,
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
