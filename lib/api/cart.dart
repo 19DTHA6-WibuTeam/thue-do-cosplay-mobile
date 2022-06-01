@@ -8,8 +8,8 @@ import 'package:shop_app/models/All.dart';
 Future<List<Cart>?> getCarts(Future<String> _userId) async {
   String userId = await _userId;
   // print(userId);
-  final response = await http.get(Uri.parse(
-      'https://wibuteam.phatdev.xyz/api/?action=get_carts&user_id=$userId'));
+  final response =
+      await http.get(Uri.parse(API_URL + '?action=get_carts&user_id=$userId'));
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);

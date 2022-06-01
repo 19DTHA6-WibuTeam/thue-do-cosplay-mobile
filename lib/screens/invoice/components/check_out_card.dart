@@ -71,9 +71,16 @@ class CheckoutCard extends StatelessWidget {
                     context: context,
                     builder: (contextB) {
                       return AlertDialog(
-                        title: Text('Thông báo'),
+                        title: Text('Thông tin'),
                         content: Text(
-                          'Tạm tính: ${numberWithDot(invoice.invoice_subtotal.toString())}đ\n' +
+                          'Thông tin người nhận:\n' +
+                              invoice.invoice_user_fullname +
+                              ', ' +
+                              invoice.invoice_user_phone_number +
+                              ', số ngày thuê ' +
+                              invoice.invoice_num_rental_days.toString() +
+                              '\n\n' +
+                              'Tạm tính: ${numberWithDot(invoice.invoice_subtotal.toString())}đ\n' +
                               'Phí vận chuyển: ${numberWithDot(invoice.invoice_fee_transport.toString())}đ\n' +
                               'Phí đảm bảo tài sản: ${numberWithDot(invoice.invoice_fee_bond.toString())}đ\n\n' +
                               'Xem thêm thông tin tại Website.',
@@ -111,9 +118,9 @@ class CheckoutCard extends StatelessWidget {
                 SizedBox(
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
-                    text: orderStatus(invoice.invoice_status),
+                    text: invoice.invoice_status_name,
                     press: () {
-                      if (invoice.invoice_status == 1)
+                      if (invoice.invoice_status_id == 2)
                         Navigator.pushNamed(
                             context, CheckoutInvoiceScreen.routeName,
                             arguments:

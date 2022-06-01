@@ -64,7 +64,7 @@ class Body extends StatelessWidget {
                             onPressed: () {
                               _dismissDialog();
                             },
-                            child: Text('Đóng')),
+                            child: Text('Không')),
                         TextButton(
                           onPressed: () async {
                             _dismissDialog();
@@ -72,7 +72,7 @@ class Body extends StatelessWidget {
                             Navigator.pushNamed(
                                 context, SignInScreen.routeName);
                           },
-                          child: Text('Kó'),
+                          child: Text('Có'),
                         )
                       ],
                     );

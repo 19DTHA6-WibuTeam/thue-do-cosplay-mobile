@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/api/register.dart';
 import 'package:shop_app/api/user.dart';
-import 'package:shop_app/components/custom_surfix_icon.dart';
-import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/helper/keyboard.dart';
 import 'package:shop_app/models/All.dart';
-import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
-import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:shop_app/shared_preferences.dart';
 
 import '../../../constants.dart';
@@ -18,6 +12,7 @@ class CheckoutForm extends StatefulWidget {
   String? email;
   String? phoneNumber;
   String? address;
+  String? numRentalDays;
   String? note;
 
   TextEditingController fullnameText = TextEditingController();
@@ -25,14 +20,16 @@ class CheckoutForm extends StatefulWidget {
   TextEditingController passwordText = TextEditingController();
   TextEditingController phoneNumberText = TextEditingController();
   TextEditingController addressText = TextEditingController();
+  TextEditingController numRentalDaysText = TextEditingController();
   TextEditingController noteText = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   _CheckoutFormState createState() => _CheckoutFormState();
 }
 
 class _CheckoutFormState extends State<CheckoutForm> {
-  final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
   User? user;
 
@@ -76,7 +73,7 @@ class _CheckoutFormState extends State<CheckoutForm> {
                           children: [
                             SizedBox(height: SizeConfig.screenHeight * 0.04),
                             Form(
-                              key: _formKey,
+                              key: widget.formKey,
                               child: Column(
                                 children: [
                                   Text(
@@ -85,19 +82,28 @@ class _CheckoutFormState extends State<CheckoutForm> {
                                   ),
                                   SizedBox(
                                       height: getProportionateScreenHeight(30)),
+                                  // Khung họ tên
                                   buildFullnameFormField(user?.user_fullname),
                                   SizedBox(
                                       height: getProportionateScreenHeight(30)),
+                                  // Khung email
                                   buildEmailFormField(user?.user_email),
                                   SizedBox(
                                       height: getProportionateScreenHeight(30)),
+                                  // Khung sdt
                                   buildPhoneNumberFormField(
                                       user?.user_phone_number),
                                   SizedBox(
                                       height: getProportionateScreenHeight(30)),
+                                  // Khung ngày thuê
+                                  buildNumRentalDaysFormField('5'),
+                                  SizedBox(
+                                      height: getProportionateScreenHeight(30)),
+                                  // Khung địa chỉ
                                   buildAddressFormField(user?.user_address),
                                   SizedBox(
                                       height: getProportionateScreenHeight(30)),
+                                  // Khung ghi chú
                                   buildNoteFormField(),
                                   FormError(errors: errors),
                                   SizedBox(
@@ -155,6 +161,42 @@ class _CheckoutFormState extends State<CheckoutForm> {
       decoration: InputDecoration(
         labelText: "Ghi chú đơn hàng",
         hintText: "Nhập ghi chú cho đơn hàng (nếu có)",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+    );
+  }
+
+  TextFormField buildNumRentalDaysFormField(String? text) {
+    widget.numRentalDaysText.text = text ?? '';
+    return TextFormField(
+      controller: widget.numRentalDaysText,
+      keyboardType: TextInputType.number,
+      onSaved: (newValue) => widget.numRentalDays = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: "Vui lòng nhập số ngày thuê!");
+        }
+        int v = int.parse(value);
+        if (v >= 3 && v <= 10) {
+          removeError(error: "Số ngày thuê phải từ 3 đến 10 ngày!");
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: "Vui lòng nhập số ngày thuê!");
+          return "";
+        }
+        int v = int.parse(value);
+        if (v < 3 || v > 10) {
+          addError(error: "Số ngày thuê phải từ 3 đến 10 ngày!");
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Số ngày thuê",
+        hintText: "Chọn số ngày thuê",
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );

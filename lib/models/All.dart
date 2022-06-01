@@ -164,7 +164,9 @@ class Invoice {
   final int invoice_subtotal;
   final int invoice_fee_transport;
   final int invoice_fee_bond;
-  final int invoice_status;
+  final int invoice_status_id;
+  final String invoice_status_name;
+  final int invoice_num_rental_days;
   final String invoice_created_at;
   Invoice(
       this.invoice_id,
@@ -174,7 +176,9 @@ class Invoice {
       this.invoice_subtotal,
       this.invoice_fee_transport,
       this.invoice_fee_bond,
-      this.invoice_status,
+      this.invoice_status_id,
+      this.invoice_status_name,
+      this.invoice_num_rental_days,
       this.invoice_created_at);
   Invoice.fromJson(Map<String, dynamic> json)
       : invoice_id = json['invoice_id'],
@@ -184,7 +188,9 @@ class Invoice {
         invoice_subtotal = int.parse(json['invoice_subtotal']),
         invoice_fee_transport = int.parse(json['invoice_fee_transport']),
         invoice_fee_bond = int.parse(json['invoice_fee_bond']),
-        invoice_status = int.parse(json['invoice_status']),
+        invoice_status_id = int.parse(json['invoice_status_id']),
+        invoice_status_name = json['invoice_status_name'],
+        invoice_num_rental_days = int.parse(json['invoice_num_rental_days']),
         invoice_created_at = json['invoice_created_at'];
   Map<String, dynamic> toJson() => {
         'invoice_id': invoice_id,
@@ -194,7 +200,9 @@ class Invoice {
         'invoice_subtotal': invoice_subtotal,
         'invoice_fee_transport': invoice_fee_transport,
         'invoice_fee_bond': invoice_fee_bond,
-        'invoice_status': invoice_status,
+        'invoice_status_id': invoice_status_id,
+        'invoice_status_name': invoice_status_name,
+        'invoice_num_rental_days': invoice_num_rental_days,
         'invoice_created_at': invoice_created_at,
       };
 }

@@ -29,7 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   # if you are using latest flutter please update your flutter_svg package to ^0.18.*
   flutter_svg: ^0.22.0 # help us to use SVG in our app
-  provider: ^6.0.2 # for State management
+  provider: ^6.0.3 # for State management
   http: ^0.13.4
   shared_preferences: ^2.0.13
   loadmore: ^2.0.1

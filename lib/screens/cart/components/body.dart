@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
                               _dismissDialog();
                               setState(() {});
                             },
-                            child: Text('Ko'),
+                            child: Text('Không'),
                           ),
                           TextButton(
                             onPressed: () async {
@@ -141,7 +141,7 @@ class _BodyState extends State<Body> {
                                 });
                               }
                             },
-                            child: Text('Kó'),
+                            child: Text('Có'),
                           ),
                         ],
                       );

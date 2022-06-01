@@ -30,6 +30,7 @@ class _BodyInvoicesState extends State<BodyInvoices> {
         _invoices = res!;
       });
     } catch (err) {
+      print(err);
       print('Something went wrongg');
     }
 

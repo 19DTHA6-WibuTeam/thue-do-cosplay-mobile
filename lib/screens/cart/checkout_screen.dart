@@ -91,47 +91,55 @@ class CheckoutScreen extends StatelessWidget {
                                 child: DefaultButton(
                                   text: "Đặt hàng",
                                   press: () async {
-                                    // print(checkoutForm.addressText.text);
-                                    // print(checkoutForm.noteText.text);
-                                    String res =
-                                        'Có lỗi xảy ra, vui lòng thử lại!';
-                                    if (context.watch<Calculate>().num > 0) {
-                                      bool _postInvoice = await postInvoice(
-                                          BaseSharedPreferences.getString(
-                                              'user_id'),
-                                          checkoutForm.fullnameText.text,
-                                          checkoutForm.phoneNumberText.text,
-                                          checkoutForm.emailText.text,
-                                          checkoutForm.addressText.text,
-                                          checkoutForm.noteText.text);
-                                      if (_postInvoice)
-                                        res =
-                                            'Đặt hàng thành công! Vui lòng kiểm tra đơn hàng và thanh toán.';
-                                    }
-                                    _dismissDialog() {
-                                      Navigator.pop(context);
-                                    }
+                                    if (checkoutForm.formKey.currentState!
+                                        .validate()) {
+                                      checkoutForm.formKey.currentState!.save();
+                                      // print(checkoutForm.addressText.text);
+                                      // print(checkoutForm.noteText.text);
+                                      String res =
+                                          'Có lỗi xảy ra, vui lòng thử lại!';
+                                      if (Provider.of<Calculate>(context,
+                                                  listen: false)
+                                              .num >
+                                          0) {
+                                        bool _postInvoice = await postInvoice(
+                                            BaseSharedPreferences.getString(
+                                                'user_id'),
+                                            checkoutForm.fullnameText.text,
+                                            checkoutForm.phoneNumberText.text,
+                                            checkoutForm.emailText.text,
+                                            checkoutForm.addressText.text,
+                                            checkoutForm.numRentalDaysText.text,
+                                            checkoutForm.noteText.text);
+                                        if (_postInvoice)
+                                          res =
+                                              'Đặt hàng thành công! Vui lòng kiểm tra đơn hàng và thanh toán.';
+                                      }
+                                      _dismissDialog() {
+                                        Navigator.pop(context);
+                                      }
 
-                                    showDialog(
-                                        context: context,
-                                        builder: (contextB) {
-                                          return AlertDialog(
-                                            title: Text('Thông báo'),
-                                            content: Text(res),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  _dismissDialog();
-                                                  Navigator.pushNamed(context,
-                                                      HomeScreen.routeName);
-                                                },
-                                                child: Text('Đóng'),
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                    // Navigator.pushNamed(
-                                    //     context, CheckoutScreen.routeName);
+                                      showDialog(
+                                          context: context,
+                                          builder: (contextB) {
+                                            return AlertDialog(
+                                              title: Text('Thông báo'),
+                                              content: Text(res),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    _dismissDialog();
+                                                    Navigator.pushNamed(context,
+                                                        HomeScreen.routeName);
+                                                  },
+                                                  child: Text('Đóng'),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                      // Navigator.pushNamed(
+                                      //     context, CheckoutScreen.routeName);
+                                    }
                                   },
                                 ),
                               ),

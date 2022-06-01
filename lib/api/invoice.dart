@@ -9,8 +9,8 @@ Future<List<Invoice>?> getInvoices(
     Future<String> _userId, int page, int limit) async {
   String userId = await _userId;
   // print(userId);
-  final response = await http.get(Uri.parse(
-      'https://wibuteam.phatdev.xyz/api/?action=get_invoices&user_id=$userId&page=$page&limit=$limit'));
+  final response = await http.get(Uri.parse(API_URL +
+      '?action=get_invoices&user_id=$userId&page=$page&limit=$limit'));
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
@@ -40,8 +40,14 @@ Future<List<InvoiceDetails>?> getInvoiceDetails(String invoiceId) async {
     return null;
 }
 
-Future<bool> postInvoice(Future<String> _userId, String fullname,
-    String phoneNumber, String email, String address, String note) async {
+Future<bool> postInvoice(
+    Future<String> _userId,
+    String fullname,
+    String phoneNumber,
+    String email,
+    String address,
+    String numRentalDays,
+    String note) async {
   String userId = await _userId;
   var map = new Map<String, dynamic>();
   map['user_id'] = userId;
@@ -49,6 +55,7 @@ Future<bool> postInvoice(Future<String> _userId, String fullname,
   map['user_phone_number'] = phoneNumber;
   map['user_email'] = email;
   map['user_address'] = address;
+  map['num_rental_days'] = numRentalDays;
   map['order_note'] = note;
   final response = await http.post(
     Uri.parse(API_URL + '?action=post_invoice'),
