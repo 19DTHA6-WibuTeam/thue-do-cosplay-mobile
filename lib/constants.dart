@@ -73,7 +73,7 @@ class Fee {
     if (price <= 1000000)
       cost = 500000;
     else
-      cost = (1000000 + price * 35 / 100) as int;
+      cost = (1000000 + price * 35 / 100).toInt();
     return cost;
   }
 }
@@ -108,18 +108,5 @@ class Calculate with ChangeNotifier {
       _weight += cart.cart_product_quantity * cart.product_weight;
     }
     notifyListeners();
-  }
-}
-
-String orderStatus(int s) {
-  switch (s) {
-    case 0:
-      return 'Đã huỷ';
-    case 1:
-      return 'Đang chờ thanh toán';
-    case 2:
-      return 'Đã thanh toán';
-    default:
-      return '';
   }
 }
